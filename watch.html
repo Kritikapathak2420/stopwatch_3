@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProTimer - Professional Stopwatch Suite</title>
+    <meta name="description" content="Professional stopwatch application with advanced timing features, analytics, and precision controls">
+    <link rel="stylesheet" href="stop.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="logo-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12,6 12,12 16,14"/>
+                        </svg>
+                    </div>
+                    <div class="logo-text">
+                        <h1>ProTimer</h1>
+                        <span class="logo-subtitle">Professional Timing Suite</span>
+                    </div>
+                </div>
+                <div class="header-controls">
+                    <button id="themeToggle" class="icon-btn" title="Toggle Theme">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"/>
+                            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                        </svg>
+                    </button>
+                    <button id="fullscreenBtn" class="icon-btn" title="Toggle Fullscreen">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M16 21h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+                        </svg>
+                    </button>
+                    <button id="settingsBtn" class="icon-btn" title="Settings">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="3"/>
+                            <path d="M12 1v6M12 17v6M5.64 7.05l4.95 4.95M13.41 13.41l4.95 4.95M7.05 18.36l4.95-4.95M13.41 10.59l4.95-4.95"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Stopwatch Display -->
+            <section class="stopwatch-section">
+                <div class="stopwatch-card">
+                    <div class="precision-indicator">
+                        <span class="precision-label">Precision:</span>
+                        <span id="precisionValue" class="precision-value">±0.01s</span>
+                    </div>
+                    
+                    <div class="time-display-container">
+                        <div id="timeDisplay" class="time-display">00:00.00</div>
+                        <div class="time-parts">
+                            <span class="time-label">Minutes</span>
+                            <span class="time-label">Seconds</span>
+                            <span class="time-label">Centiseconds</span>
+                        </div>
+                    </div>
+
+                    <div class="status-indicators">
+                        <div id="statusIndicator" class="status-indicator stopped">
+                            <div class="status-dot"></div>
+                            <span id="statusText">Ready</span>
+                        </div>
+                        <div class="elapsed-info">
+                            <span id="elapsedTime">Total: 00:00.00</span>
+                        </div>
+                    </div>
+
+                    <!-- Control Panel -->
+                    <div class="control-panel">
+                        <div class="primary-controls">
+                            <button id="startStopBtn" class="control-btn primary-btn start-btn">
+                                <div class="btn-content">
+                                    <svg class="btn-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polygon points="5,3 19,12 5,21"/>
+                                    </svg>
+                                    <span class="btn-text">Start</span>
+                                </div>
+                                <div class="btn-shortcut">Space</div>
+                            </button>
+                        </div>
+
+                        <div class="secondary-controls">
+                            <button id="lapBtn" class="control-btn secondary-btn" disabled>
+                                <div class="btn-content">
+                                    <svg class="btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <path d="M12 6v6l4 2"/>
+                                    </svg>
+                                    <span class="btn-text">Lap</span>
+                                </div>
+                                <div class="btn-shortcut">L</div>
+                            </button>
+
+                            <button id="splitBtn" class="control-btn secondary-btn" disabled>
+                                <div class="btn-content">
+                                    <svg class="btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                                    </svg>
+                                    <span class="btn-text">Split</span>
+                                </div>
+                                <div class="btn-shortcut">S</div>
+                            </button>
+
+                            <button id="resetBtn" class="control-btn reset-btn">
+                                <div class="btn-content">
+                                    <svg class="btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                                        <path d="M3 3v5h5"/>
+                                    </svg>
+                                    <span class="btn-text">Reset</span>
+                                </div>
+                                <div class="btn-shortcut">R</div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Analytics Dashboard -->
+            <section class="analytics-section">
+                <div class="analytics-grid">
+                    <!-- Quick Stats -->
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <h3>Session Stats</h3>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 3v18h18"/>
+                                <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/>
+                            </svg>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-item">
+                                <span class="stat-label">Total Laps</span>
+                                <span id="totalLaps" class="stat-value">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Avg Lap Time</span>
+                                <span id="avgLapTime" class="stat-value">--:--</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Session Time</span>
+                                <span id="sessionTime" class="stat-value">00:00</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Performance Metrics -->
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <h3>Performance</h3>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"/>
+                                <path d="M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/>
+                                <path d="M12 2v2"/>
+                                <path d="M12 20v2"/>
+                                <path d="M4.93 4.93l1.41 1.41"/>
+                                <path d="M17.66 17.66l1.41 1.41"/>
+                                <path d="M2 12h2"/>
+                                <path d="M20 12h2"/>
+                                <path d="M6.34 17.66l-1.41 1.41"/>
+                                <path d="M19.07 4.93l-1.41 1.41"/>
+                            </svg>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-item best">
+                                <span class="stat-label">Best Lap</span>
+                                <span id="bestLapStat" class="stat-value">--:--</span>
+                            </div>
+                            <div class="stat-item worst">
+                                <span class="stat-label">Slowest Lap</span>
+                                <span id="worstLapStat" class="stat-value">--:--</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Consistency</span>
+                                <span id="consistencyScore" class="stat-value">--%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Timing Records -->
+            <section id="recordsSection" class="records-section" style="display: none;">
+                <div class="records-card">
+                    <div class="records-header">
+                        <div class="records-title">
+                            <h2>Timing Records</h2>
+                            <div class="records-count">
+                                <span id="recordsCount">0 records</span>
+                            </div>
+                        </div>
+                        <div class="records-controls">
+                            <button id="exportBtn" class="icon-btn" title="Export Data">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                    <polyline points="7,10 12,15 17,10"/>
+                                    <line x1="12" y1="15" x2="12" y2="3"/>
+                                </svg>
+                            </button>
+                            <button id="clearAllBtn" class="icon-btn danger" title="Clear All Records">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="3,6 5,6 21,6"/>
+                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Filter and Sort -->
+                    <div class="records-filters">
+                        <div class="filter-group">
+                            <label for="sortBy">Sort by:</label>
+                            <select id="sortBy" class="filter-select">
+                                <option value="newest">Newest First</option>
+                                <option value="oldest">Oldest First</option>
+                                <option value="fastest">Fastest First</option>
+                                <option value="slowest">Slowest First</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="filterType">Show:</label>
+                            <select id="filterType" class="filter-select">
+                                <option value="all">All Records</option>
+                                <option value="laps">Lap Times Only</option>
+                                <option value="splits">Split Times Only</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Records List -->
+                    <div class="records-container">
+                        <div id="recordsList" class="records-list"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Settings Modal -->
+        <div id="settingsModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Settings</h2>
+                    <button id="closeSettings" class="icon-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="18" y1="6" x2="6" y2="18"/>
+                            <line x1="6" y1="6" x2="18" y2="18"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="setting-group">
+                        <h3>Display</h3>
+                        <div class="setting-item">
+                            <label for="precisionSetting">Time Precision:</label>
+                            <select id="precisionSetting" class="setting-select">
+                                <option value="centiseconds">Centiseconds (0.01s)</option>
+                                <option value="milliseconds">Milliseconds (0.001s)</option>
+                            </select>
+                        </div>
+                        <div class="setting-item">
+                            <label for="soundEnabled">Sound Effects:</label>
+                            <input type="checkbox" id="soundEnabled" class="setting-checkbox" checked>
+                        </div>
+                    </div>
+                    <div class="setting-group">
+                        <h3>Behavior</h3>
+                        <div class="setting-item">
+                            <label for="autoLap">Auto-lap Interval (seconds):</label>
+                            <input type="number" id="autoLap" class="setting-input" min="0" max="3600" value="0" placeholder="0 = disabled">
+                        </div>
+                        <div class="setting-item">
+                            <label for="confirmReset">Confirm Reset:</label>
+                            <input type="checkbox" id="confirmReset" class="setting-checkbox" checked>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Keyboard Shortcuts Help -->
+        <div class="shortcuts-help">
+            <div class="shortcuts-content">
+                <div class="shortcut-item">
+                    <kbd>Space</kbd>
+                    <span>Start/Stop</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>L</kbd>
+                    <span>Lap</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>S</kbd>
+                    <span>Split</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>R</kbd>
+                    <span>Reset</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>F11</kbd>
+                    <span>Fullscreen</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="stop.js"></script>
+</body>
+</html>
